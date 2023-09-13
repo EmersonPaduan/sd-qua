@@ -32,4 +32,24 @@ public class CarService {
         }
         return Optional.empty();
     }
+    
+    public Optional<CarDTO> update(CarDTO carDTO) {
+        Optional<Car> carfound = carRepo.findByPlate(carDTO.getPlate());
+        if(carfound.isEmpty()) {
+            return Optional.empty();
+        }
+        Car car = carfound.get();
+
+        if(carDTO.getColor() != null) {
+            car.setColor(carDTO.getColor());
+        }
+
+        if(carDTO.getYear() > 0) {
+            car.setYear(carDTO.getYear());
+        }
+
+        Car carUpdated = carRepo.save(car);
+        
+        return Optional.of(new CarDTO(carUpdated));
+    }
 }

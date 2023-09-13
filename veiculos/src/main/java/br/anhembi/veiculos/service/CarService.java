@@ -49,7 +49,17 @@ public class CarService {
         }
 
         Car carUpdated = carRepo.save(car);
-        
+
         return Optional.of(new CarDTO(carUpdated));
+    }
+
+    public boolean delete(String plate) {
+        Optional<Car> carfound = carRepo.findByPlate(plate);
+        if(carfound.isEmpty()) {
+            return false;
+        }
+
+        carRepo.deleteById(carfound.get().getId());
+        return true;
     }
 }

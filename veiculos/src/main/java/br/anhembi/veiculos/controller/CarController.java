@@ -30,14 +30,24 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.CREATED).body(carSaved);
     }
 
-    @GetMapping("/{plate}")
-    public ResponseEntity<CarDTO> findByPlate(@PathVariable String plate) {
-        Optional<CarDTO> carDto =  carService.findByPlate(plate);
+    // @GetMapping("/{plate}")
+    // public ResponseEntity<CarDTO> findByPlate(@PathVariable String plate) {
+    //     Optional<CarDTO> carDto =  carService.findByPlate(plate);
 
-        if(carDto.isEmpty()) {
+    //     if(carDto.isEmpty()) {
+    //         return ResponseEntity.notFound().build();
+    //     }
+    //     return ResponseEntity.ok(carDto.get());
+    // }
+
+    @GetMapping("/{plate}")
+    public ResponseEntity<Car> findByPlate(@PathVariable String plate) {
+        Optional<Car> car =  carService.findByPlate(plate);
+
+        if(car.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(carDto.get());
+        return ResponseEntity.ok(car.get());
     }
 
     @PatchMapping

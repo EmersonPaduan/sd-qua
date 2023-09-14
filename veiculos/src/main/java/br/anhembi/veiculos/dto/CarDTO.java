@@ -20,6 +20,6 @@ public class CarDTO {
     }
 
     public Car toCar() {
-        return new Car(null, plate, year, color);
+        return new Car(null, plate, year, color, null);
     }
 }

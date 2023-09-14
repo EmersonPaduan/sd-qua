@@ -23,12 +23,22 @@ public class CarService {
         return carRepo.findById(id);
     }
 
-    public Optional<CarDTO> findByPlate(String plate) {
+    // public Optional<CarDTO> findByPlate(String plate) {
+    //     Optional<Car> carOptional = carRepo.findByPlate(plate);
+
+    //     if(carOptional.isPresent()){
+    //         Car carFound = carOptional.get();
+    //         return Optional.of(new CarDTO(carFound));
+    //     }
+    //     return Optional.empty();
+    // }
+
+    public Optional<Car> findByPlate(String plate) {
         Optional<Car> carOptional = carRepo.findByPlate(plate);
 
         if(carOptional.isPresent()){
             Car carFound = carOptional.get();
-            return Optional.of(new CarDTO(carFound));
+            return Optional.of(carFound);
         }
         return Optional.empty();
     }

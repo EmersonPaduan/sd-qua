@@ -6,7 +6,10 @@ import org.springframework.stereotype.Service;
 
 import br.anhembi.veiculos.dto.CarDTO;
 import br.anhembi.veiculos.entities.Car;
+import br.anhembi.veiculos.entities.Owner;
+import br.anhembi.veiculos.exceptions.OwnerNotFoundException;
 import br.anhembi.veiculos.repository.CarRepo;
+import br.anhembi.veiculos.repository.OwnerRepo;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -14,24 +17,19 @@ import lombok.RequiredArgsConstructor;
 public class CarService {
     
     private final CarRepo carRepo;
+    private final OwnerRepo ownerRepo;
 
-    public Car saveCar(Car newCar) {
+    public Car saveCar(Car newCar, long idProprietatio) {
+        Owner owner = ownerRepo.findById(idProprietatio)
+            .orElseThrow(()-> new OwnerNotFoundException("Proprietário não existe"));
+        
+        newCar.setOwner(owner);
         return carRepo.save(newCar);
     }
 
     public Optional<Car> findById(long id) {
         return carRepo.findById(id);
     }
-
-    // public Optional<CarDTO> findByPlate(String plate) {
-    //     Optional<Car> carOptional = carRepo.findByPlate(plate);
-
-    //     if(carOptional.isPresent()){
-    //         Car carFound = carOptional.get();
-    //         return Optional.of(new CarDTO(carFound));
-    //     }
-    //     return Optional.empty();
-    // }
 
     public Optional<Car> findByPlate(String plate) {
         Optional<Car> carOptional = carRepo.findByPlate(plate);

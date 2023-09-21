@@ -1,6 +1,7 @@
 package br.anhembi.veiculos.dto;
 
 import br.anhembi.veiculos.entities.Car;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CarDTO {
+    @NotBlank(message = "A placa é obrigatória")
     private String plate;
+
     private int year;
     private String color;
 

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.anhembi.veiculos.dto.CarDTO;
 import br.anhembi.veiculos.entities.Car;
 import br.anhembi.veiculos.service.CarService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/car")
@@ -24,21 +25,11 @@ public class CarController {
     @Autowired
     private CarService carService;
 
-    @PostMapping
-    public ResponseEntity<Car> create(@RequestBody CarDTO cardDto) {
-        Car carSaved = carService.saveCar(cardDto.toCar());
+    @PostMapping("/{id}")
+    public ResponseEntity<Car> create(@Valid @RequestBody CarDTO cardDto, @PathVariable long id) {
+        Car carSaved = carService.saveCar(cardDto.toCar(), id);
         return ResponseEntity.status(HttpStatus.CREATED).body(carSaved);
     }
-
-    // @GetMapping("/{plate}")
-    // public ResponseEntity<CarDTO> findByPlate(@PathVariable String plate) {
-    //     Optional<CarDTO> carDto =  carService.findByPlate(plate);
-
-    //     if(carDto.isEmpty()) {
-    //         return ResponseEntity.notFound().build();
-    //     }
-    //     return ResponseEntity.ok(carDto.get());
-    // }
 
     @GetMapping("/{plate}")
     public ResponseEntity<Car> findByPlate(@PathVariable String plate) {

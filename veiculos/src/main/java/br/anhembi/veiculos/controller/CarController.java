@@ -50,7 +50,7 @@ public class CarController {
         return ResponseEntity.ok(carOptional.get());
     }
 
-    @DeleteMapping("{plate}")
+    @DeleteMapping("/delete/{plate}")
     public ResponseEntity<Void> delete(@PathVariable String plate) {
         boolean response = carService.delete(plate);
         if(response) {

@@ -28,8 +28,9 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests( (autorize) -> autorize
                 .requestMatchers("/login").permitAll() 
+                .requestMatchers("/car/delete/**").hasRole("ADMIN") 
                 .requestMatchers("/car").authenticated() 
-                .requestMatchers("/car/delete").hasAnyRole("ADMIN") 
+                .requestMatchers("/user").permitAll()
                 .anyRequest().authenticated()
                 ).httpBasic(Customizer.withDefaults());
         return http.build();   
